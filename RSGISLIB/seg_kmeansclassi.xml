@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+          Desc
+                       XML File for execution within RSGISLib
+                       Created by Rachel Melrose on Wednesday Oct 16 12:02:10 2013.
+                       -->
+
+<rsgis:commands xmlns:rsgis="http://www.rsgislib.org/xml/">
+    <!-- Initial segmentation -->
+    <rsgis:command algor="segmentation" option="specgrp" image="LS5_TM_NBAR_144_-030_2009-01-05_envi_subset_willara_b234" output="clumps.img" specthreshold="20" format="HFA" inmemory="yes" proj="IMAGE" />
+
+    <!-- Perform k-means classification and output an image so we can exxamien this as an intermediate step --~>
+    <rsgis:command algor="classification" option="kmeans" image="string" output="string" numclusters="60" 
+      initalgor="random | kpp" maxiterations="int" clustermove="float" printinfo="yes" centres="centres.csv" />
+
+    <!-- Group segments to minmum size -->
+    <rsgis:command algor="segmentation" option="rmsmallclumps" image="LS5_TM_NBAR_144_-030_2009-01-05_envi_subset_willara_b234" clumps="clumps.img" output="clumps_grouped.img" minsize="80" maxspectraldist="200" format="HFA" inmemory="no" proj="IMAGE"  />
+
+    <!-- Reclump the segmentation to get sequencial indexing -->
+    <rsgis:command algor="segmentation" option="clump" image="clumps_grouped.img" output="segments.img" format="HFA" inmemory="no" proj="IMAGE" />
+
+    <!-- Generate a spectral Mean image for segments -->
+    <rsgis:command algor="segmentation" option="meanimg" image="LS5_TM_NBAR_144_-030_2009-01-05_envi_subset_willara_b234" clumps="segments.img" output="segment_means.img" format="HFA" inmemory="no" proj="IMAGE"  />
+        </rsgis:commands>
+
