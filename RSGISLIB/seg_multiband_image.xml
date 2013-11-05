@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+     Desc
+             XML File for execution within RSGISLib
+             Created by Rachel Melrose on Thursday Oct 17 10:30:10 2013.
+             Copyright (c) 2012 Your Organisation. All rights reserved.
+             -->
+
+<rsgis:commands xmlns:rsgis="http://www.rsgislib.org/xml/">
+    <!-- Initial segmentation -->
+    <rsgis:command algor="segmentation" option="specgrp" image="/home/547/rtm547/seg_test/ALOS_PALSAR/will_378_6590_20052010_HH_pwr_rsp_lee_bin_geo_dB_maskedNans" output="/home/547/rtm547/seg_test/ALOS_PALSAR/SAR_HH_HV_20052010clumps.img" specthreshold="10" format="HFA" inmemory="no" proj="IMAGE" />
+    
+    <!-- Group segments to minmum size -->
+    <!--rsgis:command algor="segmentation" option="rmsmallclumps" image="/home/547/rtm547/seg_test/ALOS_PALSAR/will_378_6590_20052010_HH_pwr_rsp_lee_bin_geo_dB_maskedNans" clumps="/home/547/rtm547/seg_test/ALOS_PALSAR/SAR_HH_HV_20052010clumps.img" output="/home/547/rtm547/seg_test/SAR_HH_HV_20052010clumps_grouped.img" minsize="40" maxspectraldist="50" format="HFA" inmemory="no" proj="IMAGE"  / --!>
+
+    <!-- Reclump the segmentation to get sequencial indexing -->
+    <rsgis:command algor="segmentation" option="clump" image="/home/547/rtm547/seg_test/ALOS_PALSAR/SAR_HH_HV_20052010clumps.img" output="/home/547/rtm547/seg_test/ALOS_PALSAR/SAR_HH_HV_20052010segments.img" format="HFA" inmemory="no" proj="IMAGE" />
+
+    <!-- Generate a spectral Mean image for segments -->
+    <rsgis:command algor="segmentation" option="meanimg" image="/home/547/rtm547/seg_test/ALOS_PALSAR/SAR_HH_HV_20052010clumps_grouped.img" clumps="/home/547/rtm547/seg_test/ALOS_PALSAR/SAR_HH_HV_20052010segments.img" output="/home/547/rtm547/seg_test/ALOS_PALSAR/SAR_HH_HV_20052010segment_means.img" format="HFA" inmemory="no" proj="IMAGE"  />
+    </rsgis:commands>
+
